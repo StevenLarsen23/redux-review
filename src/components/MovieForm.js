@@ -1,26 +1,30 @@
-import React, { Component } from 'react'
-import styles from './styles'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { setMovieInfo } from "../redux/moviesReducer";
+import styles from "./styles";
 
 class MovieForm extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
-      title: '',
-      poster: '',
+      title: "",
+      poster: "",
       rating: null,
-    }
+    };
   }
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
-  handleSubmit = e => {
-    e.preventDefault()
-    this.props.history.push('/confirm')
-  }
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const { title, poster, rating } = this.state;
+    this.props.setMovieInfo(title, poster, rating);
+    this.props.history.push("/confirm");
+  };
 
   render() {
     return (
@@ -53,7 +57,7 @@ class MovieForm extends Component {
           </button>
         </form>
       </div>
-    )
+    );
   }
 }
-export default MovieForm
+export default connect(null, { setMovieInfo })(MovieForm);
